@@ -4,7 +4,7 @@
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  shadowUrl = env("SHADOW_URL")
+  shadowDatabaseUrl = env("SHADOW_URL")
 }
 
 generator client {
@@ -22,8 +22,7 @@ model Doctor {
 model Appointment {
  id             Int       @id @default(autoincrement())
  practice_name  String 
- date           DateTime           
- time           DateTime  @default(now())
+ date           DateTime  @default(now())
  reason         String
  doctorId       Int
  doctor         Doctor    @relation(fields: [doctorId], references: [id])
