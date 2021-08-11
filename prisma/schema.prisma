@@ -9,6 +9,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["referentialActions"]
 }
 
 model Doctor {
@@ -16,15 +17,14 @@ model Doctor {
   first_name  String 
   last_name   String
   Specialty   String
-  appointment Appointment[]
+  appointments Appointment[]
 }
 
 model Appointment {
  id             Int       @id @default(autoincrement())
  practice_name  String 
- date           DateTime  @default(now())
+ date           DateTime  
  reason         String
  doctorId       Int
- doctor         Doctor    @relation(fields: [doctorId], references: [id])
-
+ doctor         Doctor    @relation(fields: [doctorId], references: [id], onDelete: Cascade)
 }
