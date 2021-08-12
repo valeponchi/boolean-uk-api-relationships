@@ -35,13 +35,13 @@ const getDoctorAppointments = async (req, res) => {
 //CREATE ONE
 async function createOneDoctor(req, res) {
 	const newDoctor = req.body
-	const createdDoctor = await doctor.create({ data: newDoctor })
-	res.json({ data: createdDoctor })
 
-	// try {
-	// } catch (error) {
-	// 	res.json({ error: error.message })
-	// }
+	try {
+		const createdDoctor = await doctor.create({ data: newDoctor })
+		res.json({ data: createdDoctor })
+	} catch (error) {
+		res.json({ error: error.message })
+	}
 }
 
 //DELETE ONE
