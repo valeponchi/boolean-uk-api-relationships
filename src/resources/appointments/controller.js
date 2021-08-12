@@ -1,9 +1,27 @@
 const { appointment, doctor } = require('../../../src/utils/dbClient')
 
-function getAllAppointments(req, res) {
-	appointment.findMany().then(getAllAppointments => {
-		res.json({ getAllAppointments })
-	})
+// function getAllAppointments(req, res) {
+// 	appointment.findMany().then(getAllAppointments => {
+// 		res.json({ getAllAppointments })
+// 	})
+// }
+// OR THIS WAY:
+const getAllAppointments = async (req, res) => {
+	// appointments?order=recent
+	// 'order' is the key inside re req-obj and 'recent' is the value
+	const { order } = req.query
+	console.log(req.query)
+
+	let allAppointments = null
+
+	if (order === 'recent') {
+		allAppointments = await appointment.findMany({
+			orderBy: { date: 'desc' },
+		})
+	} else {
+		allAppointments = await appointment.findMany()
+	}
+	res.json({ data: allAppointments })
 }
 
 async function createOneAppointment(req, res) {
